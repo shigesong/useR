@@ -22,4 +22,9 @@ summary(v.model3)
 # Show all three models in one table
 library(texreg)
 
-result <- screenreg(list(v.model1, v.model2, v.model3))
+tr.result <- screenreg(list(v.model1, v.model2, v.model3))
+
+library(stargazer)
+
+sg.result <- stargazer(v.model1, v.model2, v.model3, type="text")
+
