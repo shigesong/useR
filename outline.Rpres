@@ -1,8 +1,9 @@
-Introducting the R-centric Data Analysis Workflow
+Introducing the R-centric Data Analysis Workflow
 ========================================================
 navigation: section
 author: Shige
-date: 
+date: 10/15/2013
+autosize: true
 
 What is workflow?
 ========================================================
@@ -12,11 +13,13 @@ type: section
 * Data analysis;
 * Report result.
 
+The goal of having a good workflow is to enable you to get your work done as efficiently as possible. More theoretical discussions can be found on this paper by [Kieran Healy](kieranhealy.org/files/misc/workflow-apps.pdf).
+
 What is your workflow?
 ========================================================
 type: subsection
 
-
+Please share ...
 
 What is the R-centric workflow?
 ========================================================
@@ -24,37 +27,47 @@ type: subsection
 
 1. Statistical analysis using R;
 2. Report writing using LaTeX or Markdown;
-3. 
+3. Embedding the computation into the report/paper;
+4. Rstudio.
+
+What do you gain: 
+
+1. No copy/paste necessary;
+2. Can drastically reduce errors;
+3. Save time.
+
+What tools are needed?
+========================================================
+type: subsection
+
+1. R (required)
+2. Knitr (required)
+3. Rstudio (required)
+4. R packages including Zelig, reshape2, ggplot2, texreg, stargazer, Gmisc, etc. (required)
+5. LaTeX (optional)
 
 What is R?
 ========================================================
 type: section
 
-* A programming languge, the [GNU](http://en.wikipedia.org/wiki/GNU) [S](http://en.wikipedia.org/wiki/S_%28programming_language%29);
+* A programming language, the [GNU](http://en.wikipedia.org/wiki/GNU) [S](http://en.wikipedia.org/wiki/S_%28programming_language%29);
 * A statistical platform with easy-to-use syntax;
 
-The combination of the two produces an unstopable monster ... a total number of 4,903 user-contributed [packages](http://cran.at.r-project.org/web/packages/) that are actively maintained and the number is increasing daily. 
+The combination of the two produces an unstoppable monster ... a total number of 4,903 user-contributed [packages](http://cran.at.r-project.org/web/packages/) that are actively maintained and the number is increasing daily. 
 
-It has become the *de facto* standard for statistical computing ([here](http://r4stats.com/articles/popularity/) for some recent statistics). 
 
-Packages: I
+R packages
 ========================================================
 
 * R without any packages is not very useful;
 * A package is a collection of functions to carry out some tasks;
-* It is sort of like "ado" files in Stata but much less limitted;
-* There are multiple ways to do the same thing, you need to figure out a combination that suites you the best.
+* It is sort of like "ado" files in Stata but much less limited;
+* There are multiple ways to do the same thing, you need to figure out a combination that suites you best.
 
-Packages: II
-========================================================
+You may ask: 
 
-The majority of my routine data analysis is done using: 
-* [Zelig](http://cran.at.r-project.org/web/packages/Zelig/index.html) (and extensions like ZeligChoice, ZeligMultilevel, and ZeligGAM), for estimation and simulation;
-* ggplot2, for publication quality graphs and figures;
-* texreg and stargazer, for producing tables;
-* knitr, for [literate programming](http://en.wikipedia.org/wiki/Literate_programming)
-
-I will show some examples for these packages.
+1. How many R packages? [Answer](http://cran.at.r-project.org/web/packages/)
+2. What can these R packages do? [Answer](http://cran.at.r-project.org/web/views/)
 
 Not so long ago ...
 ========================================================
@@ -69,6 +82,17 @@ Commercial R
 [Revolution R Enterprise](http://www.revolutionanalytics.com)
 ![alt text](http://www.revolutionanalytics.com/images/product/Revolution-R-Enterprise-RPE-screenshot.jpg)
 
+Install required packages
+========================================================
+type: alert
+
+Let's pause and make sure you have installed all the packages we need by:
+
+1. Open Rstudio;
+2. Go the "Packages" tab;
+3. Click "Install packages";
+4. Copy and paste the following into the "Packages" field: **knitr, ggplot2, Zelig, ZeligChoice, ZeligMultilevel, texreg, stargazer, xtable, devtools, reshape2**
+5. Make sure that "Install dependencies" option is ticked.
 
 Using R
 ========================================================
@@ -81,9 +105,13 @@ type: section
 Using R as a calculator
 ========================================================
 
-This is good for simple calculation and explorative analysis.
+This is good for simple calculation and exploratory analysis.
 
-A few examples.
+* library(Zelig)
+* data(turnout)
+* summary(turnout)
+
+We can go to the "Environment" tab to find more about this data set.
 
 Writing R program
 ========================================================
@@ -91,7 +119,7 @@ Writing R program
 * In Stata, we call it "do file";
 * Let's try some simple stuff.
 
-Run "demo1.R"
+Run "[demo1.R](https://github.com/shigesong/useR/blob/master/demo1.R)"
 
 What have we just done?
 ========================================================
@@ -107,7 +135,7 @@ What have we just done?
 Creating a "notebook" of what we just did.
 ========================================================
 
-A notebook is a report file that combines both R program code and the output generated by the code. With Rstudio, you don't need to do anything special. Just clike "File/Compile Notebook". 
+A notebook is a report file that combines both R program code and the output generated by the code. With Rstudio, you don't need to do anything special. Just click "File/Compile Notebook". 
 
 Embedding R program and results into reports
 ========================================================
@@ -121,6 +149,7 @@ What are the main weaknesses of a notebook?
 
 R Markdown: A language that is so simple ...
 ========================================================
+type: section
 
 * File/New File/R Markdown
 * Click the question mark on the upper left corner
@@ -129,7 +158,8 @@ That is the complete syntax!
 
 An example
 ========================================================
-Let's create a simple R Markdown report of what just did.
+type: alert
+Let's create a simple R Markdown report of what just did together
 
 * File\New File\R Markdown
 * ...
@@ -158,25 +188,48 @@ result <- htmlreg(list(v.model1, v.model2, v.model3), doctype=F, html.tag=F, inl
 
 Play with your own data
 ========================================================
-There are a number of ways to use your own data, which are likely to be in the fomat of Stata, SPSS, or SAS data set, including:
+There are a number of ways to use your own data, which are likely to be in the format of Stata, SPSS, or SAS data set, including:
 
 * Use Stat/transfer;
 * Use the [foreign](http://cran.at.r-project.org/web/packages/foreign/index.html) package
 
-Using the "foreign" package to import Stata data set
+Using the "foreign" package to import Stata data set from the web
 ========================================================
 
 ```{r, tidy=TRUE}
 library(foreign)
-jsp <- read.dta("~/data/jsp.dta", warn.missing.labels=F)
-names(jsp)
+binreg <- read.dta("http://www.stata-press.com/data/r12/binreg.dta")
+names(binreg)
 ```
 
 Simple results
 ========================================================
+title: false
 
-...
+```{r, results='hide', echo=T}
+library(Zelig)
+z.out <- zelig(cbind(d, (n-d)) ~ alc + smo + soc, data=binreg, model="logit")
+```
+```{r, results='asis', echo=FALSE}
+library(texreg)
+htmlreg(z.out, doctype=F, html.tag=F, inline.css=T, head.tag=F, body.tag=F, center=F, single.row=T, caption="")
+```
 
+Same model in Stata
+========================================================
+```{r, eval=FALSE, tidy=TRUE}
+* webuse binreg
+* glm n_lbw_babies alcohol smokes social, family(binomial n_women ) link(logit)
+```
+
+Access other people's Dropbox public folder
+========================================================
+type: alert
+```{r, eval=FALSE, echo=TRUE}
+library(foreign)
+dbox <- read.dta("https://dl.dropboxusercontent.com/u/211468568/class_survey.dta")
+```
+Let's try to run the code and see what's in that data.
 
 In summary: I
 ========================================================
