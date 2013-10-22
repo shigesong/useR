@@ -1,0 +1,155 @@
+Data Manipulation & Cleaning
+========================================================
+author: Shige
+date: 
+autosize: true
+
+Preparation: Loading the packages
+========================================================
+```{r}
+library(reshape2)
+library(plyr)
+library(ggplot2)
+library(Zelig)
+library(memisc)
+```
+
+We will be using the "turnout" data that come with the *Zelig* package
+
+```{r}
+data(turnout)
+```
+
+
+Tasks
+========================================================
+type: section
+
+* Describing data;
+* Renaming variables;
+* Recoding variables;
+* Generating new variables;
+* Subsetting data;
+* Merging data;
+* Reshaping data;
+* Labeling variables and values;
+
+Summary: I
+========================================================
+```{r}
+summary(turnout)
+```
+
+Summary: II
+========================================================
+```{r}
+summary(turnout$age)
+```
+
+or
+
+```{r}
+summary(turnout[2])
+```
+
+Summary: III
+========================================================
+```{r}
+attach(turnout)
+summary(age)
+detach(turnout)
+```
+
+Rename
+========================================================
+```{r}
+change <- c(age="Age", race="Race", educate="Educate", income="Income")
+turnout <- rename(turnout, change)
+names(turnout)
+```
+
+Or using the "memisc" package:
+```{r}
+turnout <- rename(turnout, 
+                  Age = "var_age",
+                  Race = "var_race")
+names(turnout)
+```
+
+Creating new variables
+========================================================
+```{r}
+turnout$school <- turnout$Educate
+names(turnout)
+table(turnout$school)
+```
+
+Recoding
+========================================================
+```{r}
+library(memisc)
+table(turnout$school)
+```
+```{r, results='hide'}
+turnout$school <- recode(turnout$Educate, 0 <- 0:0.5,
+       1 <- 1:9,
+       2 <- 10:14,
+       3 <- 15:19)
+```
+```{r}
+table(turnout$school)
+```
+
+Subsetting: I
+========================================================
+
+```{r}
+new_turnout <- subset(turnout, select=c(school, vote))
+names(new_turnout)
+```
+
+Subsetting: II
+========================================================
+
+```{r}
+hist(turnout$var_age)
+```
+
+***
+
+```{r}
+young_people <- subset(turnout, var_age<40)
+hist(young_people$var_age)
+```
+
+Labeling: variable label
+========================================================
+
+```{r}
+library(Hmisc)
+label(turnout$var_race) <- "Race and ethnicity"
+label(turnout$var_age) <- "Age of respondent"
+```
+
+Labeling: value label
+========================================================
+```{r}
+table(turnout$school)
+turnout$school <- factor(
+  turnout$school,
+  levels=c(0, 1, 2, 3),
+  labels=c("No schooling", "Elementary school", "High school", "College")
+  )
+table(turnout$school)
+```
+
+
+Merging
+========================================================
+
+** TO BE ADDED **
+
+Reshaping
+========================================================
+
+** TO BE ADDED **
